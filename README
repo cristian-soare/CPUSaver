@@ -1,13 +1,13 @@
-//////////////////////////////////////////////////////////////////////////
-//																		//
-// CPUSaver (C)2013, Cristian-Valeriu Soare 							//
-// author: Cristian-Valeriu Soare 										//
-// e-mail: soare_cristian16@yahoo.com 									//
-// supervisor: Conf. Dr. Eng. Florin Pop								//
-// Politehnica University of Bucharest, 								//
-// Faculty of Automatic Control and Computer Science					//
-//																		//
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//														//
+// CPUSaver (C)2013, Cristian-Valeriu Soare 			//
+// author: Cristian-Valeriu Soare 						//
+// e-mail: soare_cristian16@yahoo.com 					//
+// supervisor: Conf. Dr. Eng. Florin Pop				//
+// Politehnica University of Bucharest, 				//
+// Faculty of Automatic Control and Computer Science	//
+//														//
+//////////////////////////////////////////////////////////
 
 CPUSaver is a program that runs as a daemon and monitors the open windows
 that are running on the system. It uses the Xorg API to this. 
