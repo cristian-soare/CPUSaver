@@ -1,0 +1,30 @@
+//////////////////////////////////////////////////////////////////////////
+//																		//
+// CPUSaver (C)2013, Cristian-Valeriu Soare 							//
+// author: Cristian-Valeriu Soare 										//
+// e-mail: soare_cristian16@yahoo.com 									//
+// supervisor: Conf. Dr. Eng. Florin Pop								//
+// Politehnica University of Bucharest, 								//
+// Faculty of Automatic Control and Computer Science					//
+//																		//
+//////////////////////////////////////////////////////////////////////////
+
+CPUSaver is a program that runs as a daemon and monitors the open windows
+that are running on the system. It uses the Xorg API to this. 
+Basic behaviour: windows and their processes are kept in a list. When
+a window has focus it is brought at the top of the list. If a window
+goes down the list and excseeds the allowed number of windows (threshold)
+the program either suspends, kills or slows down the process, depending
+on the configuration file set by the user.
+
+This directory contains the graphical user interface that helps configuring
+the daemon. It writes the .cpusconfig according to the user preferences and 
+it can start or stop the cpusaver daemon.
+
+The GUI is written using the Qt framework. You will need the Qt libraries to run this program.
+The Makefile, executable and object files are located in gui_control-Desktop-Debug directory
+The source code and Qt project file are located inside the gui_control directory.
+
+To build the gui control program, go into the gui_control-Desktop-Debug directory 
+and type 'make' without quotes. The executable will be created in the directory.
+This executable can then be run by launching gui_control.
