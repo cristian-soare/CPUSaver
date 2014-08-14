@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////
-//														//
-// CPUSaver (C)2013, Cristian-Valeriu Soare 			//
-// author: Cristian-Valeriu Soare 						//
-// e-mail: soare_cristian16@yahoo.com 					//
-// supervisor: Conf. Dr. Eng. Florin Pop				//
-// Politehnica University of Bucharest, 				//
-// Faculty of Automatic Control and Computer Science	//
-//														//
+//							
+// CPUSaver (C)2013, Cristian-Valeriu Soare 		
+// author: Cristian-Valeriu Soare 			
+// e-mail: soare_cristian16@yahoo.com 			
+// supervisor: Conf. Dr. Eng. Florin Pop		
+// Politehnica University of Bucharest, 		
+// Faculty of Automatic Control and Computer Science	
+//							
 //////////////////////////////////////////////////////////
 
 CPUSaver is a program that runs as a daemon and monitors the open windows
@@ -32,7 +32,6 @@ IMPORTANT NOTE:
 
 The program is destined to be used on Linux systems using the X11/Xorg window server.
 It has been testes on Arch Linux 32-bit using X11 and GNOME 3.10 desktop environment.
-Wayland and Mir support will be added in future releases as the display servers will get more mature.
 
 
 ==========================================================================
@@ -97,3 +96,7 @@ keep track of.
 Conclusion:
 CPUSaver can be used by anyone for better management of their open applications, reducing
 the cpu usage and implicitly saving the battery.
+
+==========================================================================
+
+This program won 3rd prize in the IBM Best Linux Application university contest of Romania, 2013.
