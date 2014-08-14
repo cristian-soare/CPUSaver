@@ -1,0 +1,99 @@
+//////////////////////////////////////////////////////////////////////////
+//																		//
+// CPUSaver (C)2013, Cristian-Valeriu Soare 							//
+// author: Cristian-Valeriu Soare 										//
+// e-mail: soare_cristian16@yahoo.com 									//
+// supervisor: Conf. Dr. Eng. Florin Pop								//
+// Politehnica University of Bucharest, 								//
+// Faculty of Automatic Control and Computer Science					//
+//																		//
+//////////////////////////////////////////////////////////////////////////
+
+CPUSaver is a program that runs as a daemon and monitors the open windows
+that are running on the system. It uses the Xorg API to this. 
+Basic behaviour: windows and their processes are kept in a list. When
+a window has focus it is brought at the top of the list. If a window
+goes down the list and excseeds the allowed number of windows (threshold)
+the program either suspends, kills or slows down the process, depending
+on the configuration file set by the user.
+
+To install the daemon navigate into the daemon directory and follow
+the README text file found there.
+
+To build and use the GUI for the daemon control navigate into the
+gui_control directory and follow the README_GUI instructions.
+
+It is highly recommended that you read these files as you will understand
+better how the program works and how it can be used.
+
+==========================================================================
+
+IMPORTANT NOTE:
+
+The program is destined to be used on Linux systems using the X11/Xorg window server.
+It has been testes on Arch Linux 32-bit using X11 and GNOME 3.10 desktop environment.
+Wayland and Mir support will be added in future releases as the display servers will get more mature.
+
+
+==========================================================================
+
+Implementation and algorithm details:
+
+The program uses a list (list.h) to keep track of the running applications.
+LinkedList is an implementation of a circular double linked list. It is a template
+class so it can be reused with any type. In each element, the list keeps a pointer
+to the actual value. This way, adding and removing elements from the list is faster
+as it does not need to copy every element of an object, but just a pointer to the instance.
+At destruction, the list (as every class implemented in the project) has the responsability
+to delete its elements. By using this implementation, memory can be easily freed,
+each level deleting its child members. 
+The list can also be specifically set to ignore this rule and leave its elements
+allocated even if it is being destructed.
+
+The architecture of the classes is:
+ProcessManager => LinkedList<process>, ProcessDelayer => each process => 
+LinkedList<window>, ProcessDelayer
+
+When a process is added to the list, if the number of processes excseeds the threshold, 
+the oldest processes are turned off. This behaviour is controlled by the end_type property
+of each process instance. So, it can be suspended, killed, immune or slowed down.
+In the latter case, the process adds its pointer to the ProcessDelayer list which 
+starts the slowing down routine. This routine is based on quickly suspending and continuing
+the processes (just like a PWM) using a separate thread. Setting the percent each
+process is allowed to run is like setting the width of the pulse in a PWM.
+If the number of processes returns within the limits of the threshold, the list of the
+ProcessDelayer will have zero elements, at which point it stops its parallel thread.
+The list used by ProcessDelayer is the same as the ProcessManager's one. Their elements
+point at the same processes, yet the ProcessDelayer list does not have the responsability
+of freing the memory allocated for the processes. This task is handled by the ProcessManager list.
+
+==========================================================================
+
+Files description
+cfgread.h/cpp - functions that deal with the configuration file
+pdelayer.h/cpp - class that slows down processes from its list
+pmanager.h/cpp - class that keeps track of opened applications and manages the old ones
+process.h/cpp - class that keeps details and manages a single process. It provides functions
+	of control over that specific process. Those functions are used by the manager (ProcessManager)
+window.h/cpp - keeps a window id and its parent id
+special.h/cpp - used to keep the details of a process with treatment as defined by the user.
+types.h/cpp - types definitions used throughout the project
+
+Implementation details and functions descriptions can be found in the source files comments.
+
+==========================================================================
+
+Results:
+On a process occupying 100% of cpu time, using SlowDown with allowence of 10%, top/htop reports
+a cpu usage of aproximately 15%. The cpu usage has been greatly reduced as expected.
+If the user wants the old processes to be completely suspended instead of just slowed down, 
+the results can be even better.
+CPUSaver itself uses about 1 - 2 % of cpu even when running the delayer and has a few hundred bytes
+to a few kilobytes of memory footprint, depending on the number of windows and processes it has to
+keep track of.
+
+==========================================================================
+
+Conclusion:
+CPUSaver can be used by anyone for better management of their open applications, reducing
+the cpu usage and implicitly saving the battery.
